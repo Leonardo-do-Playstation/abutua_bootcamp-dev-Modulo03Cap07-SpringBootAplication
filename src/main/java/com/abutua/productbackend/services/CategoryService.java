@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.abutua.productbackend.models.Category;
+import com.abutua.productbackend.models.Product;
 import com.abutua.productbackend.repositories.CategoryRepository;
 
 @Service
@@ -27,5 +28,25 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+    public void deleteById(Integer id){
+        categoryRepository.deleteById(id);
+    }
+
+    public Category save(Category category){
+        return categoryRepository.save(category);
+    }
+
+    public void update(int id, Category categoryUpdate) {
+        Category category = getById(id);
+
+        if (categoryUpdate.getName() == null || categoryUpdate.getName().trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category name can not be empty");
+        }
+
+        category.setName(categoryUpdate.getName());
+    
+
+        categoryRepository.save(category);
+    }
     
 }
