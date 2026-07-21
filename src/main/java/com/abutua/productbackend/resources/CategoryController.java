@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.abutua.productbackend.models.Category;
-import com.abutua.productbackend.models.Product;
 import com.abutua.productbackend.services.CategoryService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +29,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable int id) {
+    public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
         Category category = categoryService.getById(id);
         return ResponseEntity.ok(category);
     }
@@ -54,13 +53,13 @@ public class CategoryController {
     }
 
     @PutMapping("{id}")    
-    public ResponseEntity<Void> updateProduct(@PathVariable int id, @RequestBody Category categoryUpdate) {
+    public ResponseEntity<Void> updateProduct(@PathVariable long id, @RequestBody Category categoryUpdate) {
         categoryService.update(id, categoryUpdate);
         return ResponseEntity.ok().build(); 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Integer id){
+    public ResponseEntity<Void> deleteById(@PathVariable long id){
       categoryService.deleteById(id);
       return ResponseEntity.noContent().build();
     }

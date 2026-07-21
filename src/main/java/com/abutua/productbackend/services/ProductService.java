@@ -21,7 +21,7 @@ public class ProductService {
     @Autowired
     private CategoryService categoryService;
 
-    public Product getById(int id) {
+    public Product getById(long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
 
@@ -36,12 +36,12 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         Product product = getById(id);
         productRepository.delete(product);
     }
 
-    public void update(int id, Product productUpdate) {
+    public void update(long id, Product productUpdate) {
         Product product = getById(id);
 
         if (productUpdate.getCategory() == null) {

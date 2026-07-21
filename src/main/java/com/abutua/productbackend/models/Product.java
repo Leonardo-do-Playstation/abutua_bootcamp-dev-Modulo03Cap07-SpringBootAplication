@@ -14,7 +14,7 @@ public class Product {
     // Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private String description;
 
@@ -26,13 +26,13 @@ public class Product {
     private double price;
 
     // Métodos Construtores
-    public Product(int id, String name, double price) {
+    public Product(Long id, String name, double price) {
         this.id = id;
         this.name = name;
         this.price = price;
     }
 
-    public Product(int id, String name, String description, Category category, boolean promotion, boolean newProduct,
+    public Product(Long id, String name, String description, Category category, boolean promotion, boolean newProduct,
             double price) {
         this.id = id;
         this.name = name;
@@ -73,11 +73,11 @@ public class Product {
         this.newProduct = newProduct;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

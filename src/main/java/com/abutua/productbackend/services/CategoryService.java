@@ -17,7 +17,7 @@ public class CategoryService {
     @Autowired 
     private CategoryRepository categoryRepository;
 
-    public Category getById(int id) { 
+    public Category getById(long id) { 
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
 
@@ -28,7 +28,7 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public void deleteById(Integer id){
+    public void deleteById(long id){
         categoryRepository.deleteById(id);
     }
 
@@ -36,7 +36,7 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public void update(int id, Category categoryUpdate) {
+    public void update(long id, Category categoryUpdate) {
         Category category = getById(id);
 
         if (categoryUpdate.getName() == null || categoryUpdate.getName().trim().isEmpty()) {
