@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +41,7 @@ public class CategoryController {
     }
 
      @PostMapping
-    public ResponseEntity<Category> save(@RequestBody Category category) {
+    public ResponseEntity<Category> save(@Validated @RequestBody Category category) {
         category = categoryService.save(category);
 
         URI location = ServletUriComponentsBuilder

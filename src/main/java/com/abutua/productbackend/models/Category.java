@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="TBL_CATEGORY")
@@ -17,7 +19,9 @@ public class Category implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-     @Column(nullable = false, unique = true)
+     @Column(nullable = false, unique = true, length = 255)
+     @NotBlank(message = "Name can't be null")
+    @Size(min=3, max=255, message = "Name must be between 3 and 255 characters")
     private String name;
 
 
