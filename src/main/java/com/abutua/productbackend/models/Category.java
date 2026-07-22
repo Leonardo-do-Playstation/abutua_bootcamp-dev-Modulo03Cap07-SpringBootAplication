@@ -20,12 +20,13 @@ public class Category implements Serializable{
      @Column(nullable = false, unique = true)
     private String name;
 
+
+    public Category() {
+    }
+
     public Category(Long id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    public Category() {
     }
 
     public Long getId() {

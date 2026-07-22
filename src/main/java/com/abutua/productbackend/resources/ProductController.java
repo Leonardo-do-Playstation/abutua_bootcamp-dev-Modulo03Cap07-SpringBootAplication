@@ -3,8 +3,11 @@ package com.abutua.productbackend.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +30,8 @@ public class ProductController {
     @Autowired
     private ProductService productService; 
 
-    @PostMapping("products")
-    public ResponseEntity<Product> save(@RequestBody Product product) {
+    @PostMapping
+    public ResponseEntity<Product> save(@Validated @RequestBody Product product) {
         product = productService.save(product);
 
         URI location = ServletUriComponentsBuilder
