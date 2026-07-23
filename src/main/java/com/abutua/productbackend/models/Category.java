@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.abutua.productbackend.dtos.CategoryResponse;
+
 @Entity
 @Table(name="TBL_CATEGORY")
 public class Category implements Serializable{   
@@ -49,6 +51,10 @@ public class Category implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public CategoryResponse toDto(){
+        return new CategoryResponse(id, name);
     }
 
     @Override

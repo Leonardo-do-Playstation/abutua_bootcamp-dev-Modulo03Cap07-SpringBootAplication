@@ -9,7 +9,7 @@ import com.abutua.productbackend.models.Category;
 public class CategoryRequest {
     
     @Column(nullable = false, unique = true, length = 255)
-     @NotBlank(message = "Name can't be null")
+    @NotBlank(message = "Name can't be null")
     @Size(min=3, max=255, message = "Name must be between 3 and 255 characters")
 
     private String name;
