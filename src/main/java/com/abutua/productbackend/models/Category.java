@@ -19,13 +19,15 @@ public class Category implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-     @Column(nullable = false, unique = true, length = 255)
-     @NotBlank(message = "Name can't be null")
-    @Size(min=3, max=255, message = "Name must be between 3 and 255 characters")
+
     private String name;
 
 
     public Category() {
+    }
+
+    public Category(String name){
+        this.name = name;
     }
 
     public Category(Long id, String name) {

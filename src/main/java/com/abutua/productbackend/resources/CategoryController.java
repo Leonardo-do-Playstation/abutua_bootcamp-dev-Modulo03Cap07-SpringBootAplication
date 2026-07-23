@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.abutua.productbackend.dtos.CategoryRequest;
 import com.abutua.productbackend.models.Category;
 import com.abutua.productbackend.services.CategoryService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,8 +42,8 @@ public class CategoryController {
     }
 
      @PostMapping
-    public ResponseEntity<Category> save(@Validated @RequestBody Category category) {
-        category = categoryService.save(category);
+    public ResponseEntity<Category> save(@Validated @RequestBody CategoryRequest categoryRequest) {
+        Category category = categoryService.save(categoryRequest);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
