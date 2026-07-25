@@ -10,9 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
+import com.abutua.productbackend.dtos.CategoryResponse;
+import com.abutua.productbackend.dtos.ProductResponse;
 
 
 @Entity
@@ -25,13 +25,9 @@ public class Product implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Name can't be null")
-    @Size(min=3, max=255, message = "Name must be between 3 and 255 characters")
     private String name;
 
     @Column(nullable = false, length = 1024)
-    @NotBlank(message = "Description can't be null")
-    @Size(min=3, max=1024, message = "Description must be between 3 and 1024 characters")
     private String description;
 
     @ManyToOne
@@ -41,7 +37,6 @@ public class Product implements Serializable {
     private boolean promotion;
     private boolean newProduct;
 
-    @Min(value = 0 , message = "Value must be greater than 0")
     private double price;
 
     // Métodos Construtores
@@ -153,6 +148,11 @@ public class Product implements Serializable {
     public String toString() {
         return "Product [id=" + id + ", name=" + name + ", description=" + description + ", promotion=" + promotion
                 + ", newProduct=" + newProduct + ", price=" + price + "]";
+    }
+
+    
+    public ProductResponse toDto(){
+        return new ProductResponse(id, name, description, category.toDto(), promotion, newProduct, price);
     }
 
 }
