@@ -17,7 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.abutua.productbackend.dtos.CategoryRequest;
 import com.abutua.productbackend.dtos.CategoryResponse;
-import com.abutua.productbackend.models.Category;
+
 import com.abutua.productbackend.services.CategoryService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,18 +32,19 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable long id) {
-        Category category = categoryService.getById(id);
+    public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable long id) {
+        CategoryResponse category = categoryService.getDTOById(id);
         return ResponseEntity.ok(category);
     }
 
     @GetMapping
-    public List<Category> getCategories() { 
+    public List<CategoryResponse> getCategories() { 
         return categoryService.getAll();
     }
 
      @PostMapping
     public ResponseEntity<CategoryResponse> save(@Validated @RequestBody CategoryRequest categoryRequest) {
+        
         CategoryResponse category = categoryService.save(categoryRequest);
 
         URI location = ServletUriComponentsBuilder
@@ -56,7 +57,7 @@ public class CategoryController {
     }
 
     @PutMapping("{id}")    
-    public ResponseEntity<Void> updateProduct(@PathVariable long id, @RequestBody Category categoryUpdate) {
+    public ResponseEntity<Void> updateProduct(@PathVariable long id, @RequestBody CategoryRequest categoryUpdate) {
         categoryService.update(id, categoryUpdate);
         return ResponseEntity.ok().build(); 
     }

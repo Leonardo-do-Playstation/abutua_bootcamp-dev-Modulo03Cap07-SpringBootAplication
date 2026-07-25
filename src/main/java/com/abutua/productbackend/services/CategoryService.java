@@ -18,6 +18,15 @@ public class CategoryService {
     @Autowired 
     private CategoryRepository categoryRepository;
 
+
+    
+    public CategoryResponse getDTOById(long id) { 
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+
+        return category.toDto();
+    }
+
     public Category getById(long id) { 
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
@@ -25,8 +34,8 @@ public class CategoryService {
         return category;
     }
 
-    public List<Category> getAll() {
-        return categoryRepository.findAll();
+    public List<CategoryResponse> getAll() {
+        return categoryRepository.findAll().stream().map(c -> c.toDto()).collect(java.util.stream.Collectors.toList());
     }
 
     public void deleteById(long id){
@@ -38,7 +47,7 @@ public class CategoryService {
         return category.toDto();
     }
 
-    public void update(long id, Category categoryUpdate) {
+    public void update(long id, CategoryRequest categoryUpdate) {
         Category category = getById(id);
 
         if (categoryUpdate.getName() == null || categoryUpdate.getName().trim().isEmpty()) {
