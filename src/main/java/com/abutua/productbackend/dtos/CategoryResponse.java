@@ -1,5 +1,9 @@
 package com.abutua.productbackend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL) // Para nao retornar null no nome da categoria no JSON.
 public class CategoryResponse {
 
     private Long id;

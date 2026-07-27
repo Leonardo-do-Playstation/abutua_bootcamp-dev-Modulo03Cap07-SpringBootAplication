@@ -4,7 +4,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-
+import com.abutua.productbackend.models.Category;
 import com.abutua.productbackend.models.Product;
 
 public class ProductRequest {
@@ -84,13 +84,16 @@ public class ProductRequest {
     }
 
 
-    public Product toProduct(){
+    public Product toEntity(){
         Product product = new Product();
-        product.setName(this.name);
-        product.setDescription(this.description);
-        product.setPromotion(this.promotion);
-        product.setNewProduct(this.newProduct);
-        product.setPrice(this.price);
+        
+        product.setName(name);
+        product.setDescription(description);
+        product.setCategory(new Category(category.getId()));
+        product.setPromotion(promotion);
+        product.setNewProduct(newProduct);
+        product.setPrice(price);
+
         return product;
     }
 

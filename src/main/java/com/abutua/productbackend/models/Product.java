@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
 
-import com.abutua.productbackend.dtos.CategoryResponse;
 import com.abutua.productbackend.dtos.ProductResponse;
+import com.abutua.productbackend.services.ProductService;
 
 
 @Entity
@@ -152,7 +152,16 @@ public class Product implements Serializable {
 
     
     public ProductResponse toDto(){
-        return new ProductResponse(id, name, description, category.toDto(), promotion, newProduct, price);
+        ProductResponse productResponse = new ProductResponse();
+        productResponse.setId(id);
+        productResponse.setName(name);
+        productResponse.setDescription(description);
+        productResponse.setCategory(category.toDto());
+        productResponse.setPromotion(promotion);
+        productResponse.setNewProduct(newProduct);
+        productResponse.setPrice(price);
+
+        return productResponse;
     }
 
 }

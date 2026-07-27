@@ -1,17 +1,20 @@
 package com.abutua.productbackend.dtos;
 
 public class IntegerDTO {
-    Integer id;
+    Long id;
     
-    public IntegerDTO(Integer id) {
+    public IntegerDTO(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public IntegerDTO(){ 
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
