@@ -1,7 +1,9 @@
 package com.abutua.productbackend.dtos;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.abutua.productbackend.models.Category;
@@ -21,6 +23,8 @@ public class ProductRequest {
     @Size(min = 3, max = 1024, message = "Description must be between 3 and 1024 characters")
     private String description;
 
+    @NotNull(message = "Category can't be null")
+    @Valid
     private IntegerDTO category;
 
     private boolean promotion;

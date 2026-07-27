@@ -46,13 +46,13 @@ public class ProductController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable long id) {
-        Product product = productService.getById(id);
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable long id) {
+        ProductResponse product = productService.getDTOById(id);
         return ResponseEntity.ok(product);
     }
 
     @GetMapping  
-    public ResponseEntity<List<Product>> getProducts() { 
+    public ResponseEntity<List<ProductResponse>> getProducts() { 
         return ResponseEntity.ok(productService.getAll());
     }
 
@@ -63,8 +63,8 @@ public class ProductController {
     }
    
     @PutMapping("{id}")    
-    public ResponseEntity<Void> updateProduct(@PathVariable long id, @RequestBody Product productUpdate) {
-        productService.update(id, productUpdate);
+    public ResponseEntity<Void> updateProduct(@PathVariable long id, @Valid @RequestBody ProductRequest productRequest) {
+        productService.update(id, productRequest);
         return ResponseEntity.ok().build(); 
     }
     

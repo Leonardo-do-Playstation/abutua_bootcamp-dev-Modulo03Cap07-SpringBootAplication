@@ -30,8 +30,8 @@ public class ProductService {
         return product;
     }
 
-    public List<Product> getAll() {
-        return productRepository.findAll();
+    public List<ProductResponse> getAll() {
+        return productRepository.findAll().stream().map(Product::toDto).collect(java.util.stream.Collectors.toList());
     }
 
     public ProductResponse save(ProductRequest productRequest) {
@@ -39,26 +39,31 @@ public class ProductService {
         return newProduct.toDto();
     }
 
+    public ProductResponse getDTOById(long id) {
+        Product product = getById(id);
+        return product.toDto();
+    }
+
     public void deleteById(long id) {
         Product product = getById(id);
         productRepository.delete(product);
     }
 
-    public void update(long id, Product productUpdate) {
+    public void update(long id, ProductRequest productRequest) {
         Product product = getById(id);
 
-        if (productUpdate.getCategory() == null) {
+        if (productRequest.getCategory() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category can not be empty");
         }
 
-        Category category = categoryService.getById(productUpdate.getCategory().getId());
+        Category category = categoryService.getById(productRequest.getCategory().getId());
 
-        product.setDescription(productUpdate.getDescription());
-        product.setName(productUpdate.getName());
-        product.setPrice(productUpdate.getPrice());
-        product.setNewProduct(productUpdate.isNewProduct());
-        product.setPromotion(productUpdate.isPromotion());
-        product.setCategory(category);
+        product.setDescription(productRequest.getDescription());
+        product.setName(productRequest.getName());
+        product.setPrice(productRequest.getPrice());
+        product.setNewProduct(productRequest.isNewProduct());
+        product.setPromotion(productRequest.isPromotion());
+        product.setCategory(new Category(category.getId()));
 
         productRepository.save(product);
     }
