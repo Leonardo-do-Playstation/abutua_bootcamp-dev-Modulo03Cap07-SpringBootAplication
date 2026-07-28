@@ -2,8 +2,11 @@ package com.abutua.productbackend.services;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -43,6 +46,8 @@ public class CategoryService {
             categoryRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new DataBaseException("Constraint violation - Category can't be deleted");
+        } catch (EmptyResultDataAccessException e) {
+            throw new EntityNotFoundException("Category not found");
         }
 
     }

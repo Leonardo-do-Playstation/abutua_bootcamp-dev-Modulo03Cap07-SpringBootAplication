@@ -2,6 +2,7 @@ package com.abutua.productbackend.exceptions;
 
 import java.time.Instant;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,25 @@ public class ResourceExceptionHandler{
         exception.getBindingResult()
                 .getFieldErrors()
                 .forEach(e -> error.addError(e.getDefaultMessage()));
+       
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<StandartError> entityNotFoundException(EntityNotFoundException exception, HttpServletRequest request){
+       
+
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        StandartError error = new StandartError();
+        error.setError("Resource not found");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+        error.setStatusCode(status.value());
+        error.setTimeStamp(Instant.now());
+
+
+      
        
         return ResponseEntity.status(status).body(error);
     }
