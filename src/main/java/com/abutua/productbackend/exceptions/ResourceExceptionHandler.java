@@ -11,6 +11,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.abutua.productbackend.services.exceptions.DataBaseException;
+
 @ControllerAdvice
 public class ResourceExceptionHandler{
     
@@ -35,6 +37,25 @@ public class ResourceExceptionHandler{
        
         return ResponseEntity.status(status).body(error);
     }
+
+    @ExceptionHandler(DataBaseException.class)
+        public ResponseEntity<StandartError> dataBaseException(DataBaseException exception, HttpServletRequest request){
+        
+
+            HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+
+            StandartError error = new StandartError();
+
+            error.setError("Database Error");
+            error.setMessage(exception.getMessage());
+            error.setPath(request.getRequestURI());
+            error.setStatusCode(status.value());
+            error.setTimeStamp(Instant.now());
+        
+            return ResponseEntity.status(status).body(error);
+        }
+
+
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<StandartError> entityNotFoundException(EntityNotFoundException exception, HttpServletRequest request){
