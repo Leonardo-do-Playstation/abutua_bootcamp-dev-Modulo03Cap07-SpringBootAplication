@@ -23,18 +23,11 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public CategoryResponse getDTOById(long id) {
+    public CategoryResponse getById(long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
         return category.toDto();
-    }
-
-    public Category getById(long id) {
-        Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
-
-        return category;
     }
 
     public List<CategoryResponse> getAll() {
@@ -58,15 +51,18 @@ public class CategoryService {
     }
 
     public void update(long id, CategoryRequest categoryUpdate) {
-        Category category = getById(id);
 
-        if (categoryUpdate.getName() == null || categoryUpdate.getName().trim().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category name can not be empty");
+        try {
+            Category category = categoryRepository.getReferenceById(id);
+
+            category.setName(categoryUpdate.getName());
+
+            categoryRepository.save(category);
+
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Category not found");
+
         }
-
-        category.setName(categoryUpdate.getName());
-
-        categoryRepository.save(category);
     }
 
 }
